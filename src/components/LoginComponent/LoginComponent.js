@@ -49,7 +49,7 @@ class LoginComponent extends Component {
             .then(response => response.text())
             .then(res => {
                 Cookies.set('token', res);
-                this.props.history.push('/leagues')
+                this.props.history.push('/leagues');
             })
             .catch(err => this.showErrorSnackbar(err))
     };

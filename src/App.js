@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core/styles";
 import './App.css';
-
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import LoginPageContainer from "./containers/LoginPageContainer";
 import LeaguesPageContainer from "./containers/LeaguesPageContainer";
+import RegisterPageContainer from "./containers/RegisterPageContainer";
+import PrivateRoute from "./components/PrivateRoute";
 
 const theme = createMuiTheme({
     typography: {
@@ -25,13 +26,16 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
-
     render() {
+
+        console.log("App.js sees logged:", document.cookie.indexOf('token') > 0);
         return (
             <Router>
                 <MuiThemeProvider theme={theme}>
                     <Route exact path="/" component={LoginPageContainer}/>
-                    <Route path="/leagues" component={LeaguesPageContainer}/>
+                    <Route path="/register" component={RegisterPageContainer}/>
+                    <PrivateRoute path="/leagues"
+                                  component={LeaguesPageContainer}/>
                 </MuiThemeProvider>
             </Router>
         );
