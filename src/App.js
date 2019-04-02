@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core/styles";
 import './App.css';
-import SignIn from "./components/SignIn";
-import logo from "./images/logo_b.png"
-import Grid from "@material-ui/core/Grid";
+
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import LoginPageContainer from "./containers/LoginPageContainer";
+import LeaguesPageContainer from "./containers/LeaguesPageContainer";
 
 const theme = createMuiTheme({
     typography: {
@@ -27,21 +28,12 @@ class App extends Component {
 
     render() {
         return (
-            <MuiThemeProvider theme={theme}>
-                <Grid
-                    container
-                    spacing={0}
-                    direction="column"
-                    alignItems="center"
-                    style={{minHeight: '100vh'}}>
-                    <Grid item xs={12}>
-                        <img src={logo} alt="Logo" style={{maxHeight: '10em', marginTop: "2em"}}/>
-                        <SignIn/>
-                    </Grid>
-
-                </Grid>
-
-            </MuiThemeProvider>
+            <Router>
+                <MuiThemeProvider theme={theme}>
+                    <Route exact path="/" component={LoginPageContainer}/>
+                    <Route path="/leagues" component={LeaguesPageContainer}/>
+                </MuiThemeProvider>
+            </Router>
         );
     }
 }

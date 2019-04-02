@@ -11,48 +11,22 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
-import {url} from "../constants/constants";
-import {post} from "../constants/httpRequests";
+import {url} from "../../model/constants";
+import {post} from "../../model/httpRequests";
+import {styles} from "./LoginStyles";
+import Cookies from "js-cookie";
+import CustomizedSnackbar from "../CustomizedSnackbar";
+import {withRouter} from "react-router-dom";
 
-const styles = theme => ({
-    main: {
-        width: 'auto',
-        display: 'block', // Fix IE 11 issue.
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
-        [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-            width: 400,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-        },
-    },
-    paper: {
-        marginTop: theme.spacing.unit * 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-    },
-    avatar: {
-        margin: theme.spacing.unit,
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing.unit,
-    },
-    submit: {
-        marginTop: theme.spacing.unit * 3,
-    },
-});
-
-class SignIn extends Component {
+class LoginComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: "",
-            password: ""
-        }
+            password: "",
+            open: false,
+            errorReason: ""
+        };
     }
 
     handleChange = (event) => {
@@ -61,11 +35,35 @@ class SignIn extends Component {
         })
     };
 
+    handleErrors = (res) => {
+        if (!res.ok) {
+            throw new Error("Błędne dane logowania");
+        }
+        return res
+    };
+
     handleSubmit = (event) => {
         event.preventDefault();
         post(url + "api/user/login", this.state)
-            .then(response => console.log(response))
-            .catch(err => console.log(err))
+            .then(this.handleErrors)
+            .then(response => response.text())
+            .then(res => {
+                Cookies.set('token', res);
+                this.props.history.push('/leagues')
+            })
+            .catch(err => this.showErrorSnackbar(err))
+    };
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({open: false});
+    };
+
+    showErrorSnackbar = (reason) => {
+        this.setState({errorReason: reason.message, open: true})
     };
 
     render() {
@@ -106,11 +104,11 @@ class SignIn extends Component {
                         </Button>
                     </form>
                 </Paper>
+                <CustomizedSnackbar variant="error" text={this.state.errorReason} open={this.state.open}
+                                    handler={this.handleClose}/>
             </main>
         );
     }
-
-
 }
 
-export default withStyles(styles)(SignIn);
+export default withRouter(withStyles(styles)(LoginComponent));
