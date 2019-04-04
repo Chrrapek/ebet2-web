@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import Grid from "@material-ui/core/Grid";
 import logo from "../images/logo_b.png";
-import LoginComponent from "../components/LoginComponent/LoginComponent";
-import {withRouter} from "react-router-dom";
+import RegisterComponent from "../components/RegisterComponent/RegisterComponent";
 
-class LoginPageContainer extends Component {
+class RegisterPage extends Component {
     render() {
         return (
             <Grid
@@ -15,7 +14,7 @@ class LoginPageContainer extends Component {
                 style={{minHeight: '100vh'}}>
                 <Grid item xs={12}>
                     <img src={logo} alt="Logo" style={{maxHeight: '10em', marginTop: "2em"}}/>
-                    <LoginComponent/>
+                    <RegisterComponent/>
                 </Grid>
 
             </Grid>
@@ -23,4 +22,4 @@ class LoginPageContainer extends Component {
     }
 }
 
-export default withRouter(LoginPageContainer)
+export default RegisterPage;

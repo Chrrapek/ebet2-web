@@ -4,27 +4,26 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import {Create} from '@material-ui/icons';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import {withStyles} from '@material-ui/core/styles';
 import {url} from "../../model/constants";
 import {post} from "../../model/httpRequests";
-import {styles} from "./LoginStyles";
 import Cookies from "js-cookie";
 import CustomizedSnackbar from "../CustomizedSnackbar/CustomizedSnackbar";
-import {Link, withRouter} from "react-router-dom";
 import CustomFormControl from "../CustomFormControl/CustomFormControl";
+import withStyles from "@material-ui/core/styles/withStyles";
+import {styles} from "../LoginComponent/LoginStyles";
+import {withRouter} from "react-router-dom";
 
-class LoginComponent extends Component {
+
+class RegisterComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: "",
-            password: "",
-            open: false,
-            errorReason: ""
-        };
+            password: ""
+        }
     }
 
     handleChange = (event) => {
@@ -35,14 +34,14 @@ class LoginComponent extends Component {
 
     handleErrors = (res) => {
         if (!res.ok) {
-            throw new Error("Błędne dane logowania");
+            throw new Error("Konto o takiej nazwie już istnieje");
         }
         return res
     };
 
     handleSubmit = (event) => {
         event.preventDefault();
-        post(url + "api/user/login", this.state)
+        post(url + "api/user/register", this.state)
             .then(this.handleErrors)
             .then(response => response.text())
             .then(res => {
@@ -64,6 +63,12 @@ class LoginComponent extends Component {
         this.setState({errorReason: reason.message, open: true})
     };
 
+    componentDidMount() {
+        if (Cookies.get("token").length > 0) {
+            this.props.history.push("/leagues");
+        }
+    }
+
     render() {
         const {classes} = this.props;
 
@@ -72,10 +77,10 @@ class LoginComponent extends Component {
                 <CssBaseline/>
                 <Paper className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon/>
+                        <Create/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Zaloguj się
+                        Zarejestruj się
                     </Typography>
                     <form className={classes.form} onSubmit={this.handleSubmit}>
                         <CustomFormControl purpose="username" handler={this.handleChange}>
@@ -94,11 +99,8 @@ class LoginComponent extends Component {
                             variant="contained"
                             color="primary"
                             className={classes.submit}>
-                            Zaloguj
+                            Zarejestruj
                         </Button>
-                        <Typography component="h1" variant="button" align="center">
-                            <Link to={"/register"}> Nie masz konta? Zarejestruj się </Link>
-                        </Typography>
                     </form>
                 </Paper>
                 <CustomizedSnackbar variant="error" text={this.state.errorReason} open={this.state.open}
@@ -108,4 +110,4 @@ class LoginComponent extends Component {
     }
 }
 
-export default withRouter(withStyles(styles)(LoginComponent));
+export default withRouter(withStyles(styles)(RegisterComponent));
