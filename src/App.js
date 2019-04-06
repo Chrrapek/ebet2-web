@@ -10,6 +10,23 @@ import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 const theme = createMuiTheme({
     typography: {
         useNextVariants: true,
+    },
+    palette: {
+        primary: {
+            main: "#5984f3",
+            light: "#688ff4",
+            dark: "#5178dd"
+        },
+        secondary: {
+            main: "#34435e",
+            light: "#495c5e",
+            dark: "#28325e",
+        },
+        error: {
+            main: "#d63230",
+            dark: "#c32e2c",
+            light: "#d94442"
+        }
     }
 });
 
