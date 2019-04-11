@@ -63,12 +63,6 @@ class RegisterComponent extends Component {
         this.setState({errorReason: reason.message, open: true})
     };
 
-    componentDidMount() {
-        if (Cookies.get("token").length > 0) {
-            this.props.history.push("/leagues");
-        }
-    }
-
     render() {
         const {classes} = this.props;
 

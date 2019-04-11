@@ -8,7 +8,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/core/styles';
-import {url} from "../../model/constants";
+import {api, login, url, user} from "../../model/constants";
 import {post} from "../../model/httpRequests";
 import {styles} from "./LoginStyles";
 import Cookies from "js-cookie";
@@ -42,10 +42,11 @@ class LoginComponent extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        post(url + "api/user/login", this.state)
+        post(url + api + user + login, this.state)
             .then(this.handleErrors)
             .then(response => response.text())
             .then(res => {
+                Cookies.set('username', this.state.username);
                 Cookies.set('token', res);
                 this.props.history.push('/leagues');
             })
