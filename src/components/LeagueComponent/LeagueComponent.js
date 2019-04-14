@@ -27,12 +27,11 @@ const styles = theme => ({
     },
 });
 
-const LeagueComponent = (props) => {
-    const {classes} = props;
+const LeagueComponent = ({classes, league}) => {
     return (
         <Card className={classes.card}>
             <CardContent>
-                {props.league.name}
+                {league.name}
             </CardContent>
         </Card>
     )

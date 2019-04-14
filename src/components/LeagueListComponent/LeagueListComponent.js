@@ -17,11 +17,10 @@ const styles = theme => ({
     }
 });
 
-const LeagueListComponent = (props) => {
-    const {classes} = props;
+const LeagueListComponent = ({leagues, classes}) => {
     return (
         <div className={classes.cardList}>
-            {props.leagues.map((league, i) => {
+            {leagues.map((league, i) => {
                 return <LeagueComponent league={league} key={i}/>
             })}
         </div>

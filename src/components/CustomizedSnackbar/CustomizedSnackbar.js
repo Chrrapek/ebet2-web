@@ -45,8 +45,7 @@ const styles1 = theme => ({
     },
 });
 
-function MySnackbarContent(props) {
-    const {classes, className, message, onClose, variant, ...other} = props;
+const MySnackbarContent = ({classes, className, message, onClose, variant, ...other}) => {
     const Icon = variantIcon[variant];
 
     return (
@@ -73,7 +72,7 @@ function MySnackbarContent(props) {
             {...other}
         />
     );
-}
+};
 
 const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 
@@ -83,28 +82,22 @@ const styles2 = theme => ({
     },
 });
 
-class CustomizedSnackbar extends React.Component {
-
-
-    render() {
-        return (
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-                open={this.props.open}
-                autoHideDuration={6000}
-                onClose={this.props.handler}
-            >
-                <MySnackbarContentWrapper
-                    onClose={this.props.handler}
-                    variant={this.props.variant}
-                    message={this.props.text}
-                />
-            </Snackbar>
-        );
-    }
-}
+const CustomizedSnackbar = ({open, handler, variant, text}) => (
+    <Snackbar
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handler}
+    >
+        <MySnackbarContentWrapper
+            onClose={handler}
+            variant={variant}
+            message={text}
+        />
+    </Snackbar>
+);
 
 export default withStyles(styles2)(CustomizedSnackbar);
