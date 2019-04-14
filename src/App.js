@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import LoginPage from "./pages/LoginPage";
 import LeaguesPage from "./pages/LeaguesPage";
 import RegisterPage from "./pages/RegisterPage";
+import ResultsPage from "./pages/ResultsPage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 const theme = createMuiTheme({
@@ -38,6 +39,7 @@ class App extends Component {
                     <Route exact path="/" component={LoginPage}/>
                     <Route path="/register" component={RegisterPage}/>
                     <PrivateRoute path="/leagues" component={LeaguesPage}/>
+                    <PrivateRoute path="/results" component={ResultsPage}/>
                 </MuiThemeProvider>
             </Router>
         );

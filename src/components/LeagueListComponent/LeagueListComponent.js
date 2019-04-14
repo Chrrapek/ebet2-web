@@ -22,7 +22,7 @@ const LeagueListComponent = (props) => {
     return (
         <div className={classes.cardList}>
             {props.leagues.map((league, i) => {
-                return <LeagueComponent league={league}/>
+                return <LeagueComponent league={league} key={i}/>
             })}
         </div>
     )

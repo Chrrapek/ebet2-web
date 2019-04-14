@@ -47,19 +47,28 @@ class TopBar extends Component {
         this.setState({anchorEl: null});
     };
 
-    render() {
-        const logOut = () => {
-            Cookies.remove("token");
-            this.props.history.push("/");
-        };
+    goToLeagues() {
+        this.props.history.push("/leagues");
+    }
 
+    goToResults() {
+        this.props.history.push("/results");
+    }
+
+    logOut = () => {
+        Cookies.remove("token");
+        this.props.history.push("/");
+    };
+
+    render() {
         const {classes} = this.props;
         const open = Boolean(this.state.anchorEl);
         const sideList = (
             <div className={classes.list}>
                 <List>
-                    {['Lista lig', 'Ranking'].map((text, index) => (
-                        <ListItem button key={text}>
+                    {['Lista lig', 'Pełen ranking'].map((text, index) => (
+                        <ListItem button key={text}
+                                  onClick={index % 2 === 0 ? () => this.goToLeagues() : () => this.goToResults()}>
                             <ListItemIcon>
                                 {index % 2 === 0 ? <TableChartIcon/> : <RankingIcon/>}
                             </ListItemIcon>
@@ -83,8 +92,9 @@ class TopBar extends Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                            <MenuIcon onClick={() => this.toggleDrawer(true)}/>
+                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
+                                    onClick={() => this.toggleDrawer(true)}>
+                            <MenuIcon/>
                         </IconButton>
                         <Drawer open={this.state.drawerOpen} onClose={() => this.toggleDrawer(false)}>
                             <div
@@ -103,8 +113,7 @@ class TopBar extends Component {
                             aria-owns={open ? 'menu-appbar' : undefined}
                             aria-haspopup="true"
                             onClick={this.handleMenu}
-                            color="inherit"
-                        >
+                            color="inherit">
                             <AccountCircle/>
                         </IconButton>
                         <Menu
@@ -130,7 +139,7 @@ class TopBar extends Component {
                             </MenuItem>
                             <Divider/>
 
-                            <MenuItem className={classes.menuItem} onClick={() => logOut()}>
+                            <MenuItem className={classes.menuItem} onClick={() => this.logOut()}>
                                 <ListItemIcon className={classes.icon}>
                                     <LockIcon/>
                                 </ListItemIcon>
