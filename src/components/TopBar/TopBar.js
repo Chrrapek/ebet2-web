@@ -55,6 +55,10 @@ class TopBar extends Component {
         this.props.history.push("/results");
     }
 
+    goToSettings() {
+        this.props.history.push("/settings");
+    }
+
     logOut = () => {
         Cookies.remove("token");
         this.props.history.push("/");
@@ -78,7 +82,7 @@ class TopBar extends Component {
                 </List>
                 <Divider/>
                 <List>
-                    <ListItem button key={"Ustawienia"}>
+                    <ListItem button key={"Ustawienia"} onClick={() => this.goToSettings()}>
                         <ListItemIcon>
                             <SettingsIcon/>
                         </ListItemIcon>

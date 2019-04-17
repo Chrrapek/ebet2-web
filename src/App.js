@@ -7,6 +7,7 @@ import LeaguesPage from "./pages/LeaguesPage";
 import RegisterPage from "./pages/RegisterPage";
 import ResultsPage from "./pages/ResultsPage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import SettingsPage from "./pages/SettingsPage";
 
 const theme = createMuiTheme({
     typography: {
@@ -40,6 +41,7 @@ class App extends Component {
                     <Route path="/register" component={RegisterPage}/>
                     <PrivateRoute path="/leagues" component={LeaguesPage}/>
                     <PrivateRoute path="/results" component={ResultsPage}/>
+                    <PrivateRoute path="/settings" component={SettingsPage}/>
                 </MuiThemeProvider>
             </Router>
         );

@@ -4,7 +4,6 @@ import LeagueListComponent from "../components/LeagueListComponent/LeagueListCom
 import {get} from "../model/httpRequests";
 import {api, leagues, url} from "../model/constants";
 import Cookies from "js-cookie";
-import Switch from "@material-ui/core/Switch";
 
 export default class LeaguesPage extends Component {
     constructor(props) {
@@ -33,13 +32,8 @@ export default class LeaguesPage extends Component {
         return (
             <>
                 <TopBar/>
-                <Switch
-                    style={{display: 'flex', justifyContent: 'center'}}
-                    checked={this.state.archived}
-                    onChange={() => this.changeSwitchState()}
-                    value="archive"
-                />
-                <LeagueListComponent archived={this.state.archived} leagues={this.state.leaguesArray}/>
+                <LeagueListComponent archived={this.state.archived} onSwitchChange={this.changeSwitchState}
+                                     leagues={this.state.leaguesArray}/>
             </>
         )
     }
