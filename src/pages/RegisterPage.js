@@ -33,7 +33,7 @@ class RegisterPage extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        post(url + api + user + register, this.state)
+        post(url + api + user + register, {password: this.state.password, username: this.state.username})
             .then(this.handleErrors)
             .then(response => response.text())
             .then(res => {
