@@ -51,9 +51,15 @@ class RegisterPage extends Component {
         this.setState({open: false});
     };
 
+    goBackToLogin = () => {
+        this.props.history.push('/')
+    };
+
+
     showErrorSnackbar = (reason) => {
         this.setState({errorReason: reason.message, open: true})
     };
+
     render() {
         return (
             <Grid
@@ -64,7 +70,8 @@ class RegisterPage extends Component {
                 style={{minHeight: '100vh'}}>
                 <Grid item xs={12}>
                     <img src={logo} alt="Logo" style={{maxHeight: '10em', marginTop: "2em"}}/>
-                    <RegisterComponent onRegister={this.handleSubmit} onTextChange={this.handleChange}/>
+                    <RegisterComponent onBack={this.goBackToLogin} onRegister={this.handleSubmit}
+                                       onTextChange={this.handleChange}/>
                 </Grid>
                 <CustomizedSnackbar variant="error" text={this.state.errorReason} open={this.state.open}
                                     handler={this.handleClose}/>
@@ -72,5 +79,6 @@ class RegisterPage extends Component {
         )
     }
 }
+
 
 export default RegisterPage;

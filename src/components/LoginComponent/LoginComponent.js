@@ -24,7 +24,7 @@ const LoginComponent = ({onTextChange, onLogin, classes}) => {
                         Zaloguj się
                     </Typography>
                     <form className={classes.form} onSubmit={onLogin}>
-                        <CustomFormControl purpose="username" handler={onTextChange}>
+                        <CustomFormControl purpose="username" handler={onTextChange} autoFocus={true}>
                             Nazwa użytkownika
                         </CustomFormControl>
                         <CustomFormControl purpose="password" handler={onTextChange}>

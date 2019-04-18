@@ -3,12 +3,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 
-const CustomFormControl = ({purpose, handler, children}) => {
+const CustomFormControl = ({purpose, handler, children, autoFocus}) => {
     return (
         <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor={purpose}>{children}</InputLabel>
             <Input id={purpose} type={purpose} name={purpose} onChange={handler}
-                   autoComplete={purpose} autoFocus/>
+                   autoComplete={purpose} autoFocus={autoFocus}/>
         </FormControl>
     )
 };
