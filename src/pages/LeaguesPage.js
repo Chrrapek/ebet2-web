@@ -28,12 +28,16 @@ export default class LeaguesPage extends Component {
         this.setState({archived: !this.state.archived})
     };
 
+    goToMatches = (leagueUUID) => {
+        this.props.history.push(`/leagues/${leagueUUID}`);
+    };
+
     render() {
         return (
             <>
                 <TopBar/>
                 <LeagueListComponent archived={this.state.archived} onSwitchChange={this.changeSwitchState}
-                                     leagues={this.state.leaguesArray}/>
+                                     leagues={this.state.leaguesArray} goToMatches={this.goToMatches}/>
             </>
         )
     }

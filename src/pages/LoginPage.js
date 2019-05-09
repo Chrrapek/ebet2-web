@@ -26,7 +26,7 @@ class LoginPage extends Component {
     };
 
     handleErrors = (res) => {
-        if (!res.ok) {
+        if (res.statusCode === 400) {
             throw new Error("Błędne dane logowania");
         }
         return res
@@ -35,8 +35,8 @@ class LoginPage extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         post(url + api + user + login, {password: this.state.password, username: this.state.username})
+            .then(response => response.json())
             .then(this.handleErrors)
-            .then(response => response.text())
             .then(res => {
                 Cookies.set('username', this.state.username);
                 Cookies.set('token', res);

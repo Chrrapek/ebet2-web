@@ -1,15 +1,17 @@
 import React from 'react';
-import {Card, CardContent, withStyles} from "@material-ui/core";
+import {Button, ListItem, withStyles} from "@material-ui/core";
 import styles from './LeagueStyles'
 
-const LeagueComponent = ({classes, league}) => {
+const LeagueComponent = ({classes, league, goToMatches}) => {
     console.log(league);
     return (
-        <Card className={classes.card}>
-            <CardContent>
-                {league.name}
-            </CardContent>
-        </Card>
+        <ListItem className={classes.listElement}>
+            <p className={classes.leagueName}>{league.name}</p>
+            <Button variant="contained" color="primary" className={classes.button}
+                    onClick={() => goToMatches(league.leagueUUID)}>
+                Zobacz mecze
+            </Button>
+        </ListItem>
     )
 };
 

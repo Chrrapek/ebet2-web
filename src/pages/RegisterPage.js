@@ -35,9 +35,10 @@ class RegisterPage extends Component {
         event.preventDefault();
         post(url + api + user + register, {password: this.state.password, username: this.state.username})
             .then(this.handleErrors)
-            .then(response => response.text())
+            .then(response => response.json())
             .then(res => {
-                Cookies.set('token', res);
+                Cookies.set('token', res["token"]);
+                Cookies.set('username', res["username"]);
                 this.props.history.push('/leagues');
             })
             .catch(err => this.showErrorSnackbar(err))

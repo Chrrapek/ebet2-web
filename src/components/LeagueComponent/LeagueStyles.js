@@ -1,26 +1,17 @@
 const styles = theme => ({
-    card: {
-        width: 300,
-        height: 200,
-        margin: "0 2em 3em 2em",
-        flex: "1 0 auto"
+    listElement: {
+        justifyContent: "space-between",
+        flex: "1 0 auto",
+        boxShadow: "6px 5px 17px 1px #929292",
+        padding: "1.5em",
+        "&:hover": {
+            backgroundColor: "#e3e3e3"
+        },
+        marginBottom: "1.5em"
     },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    actions: {
-        display: 'flex',
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
+    leagueName: {
+        fontSize: "2em",
+        fontWeight: "bold"
     },
 });
 
