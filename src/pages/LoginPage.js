@@ -26,7 +26,6 @@ class LoginPage extends Component {
     };
 
     handleErrors = (res) => {
-        console.log("To przyszło: ", res);
         if (res.status === 404) {
             throw Error("Błędne dane logowania")
         } else if (res.status >= 200 && res.status < 300) {

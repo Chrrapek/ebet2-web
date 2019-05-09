@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import TopBar from "../components/TopBar/TopBar";
+import {get} from "../model/httpRequests";
+import {api, league, matches, url} from "../model/constants";
+import Cookies from 'js-cookie';
+import MatchTable from "../components/MatchComponent/MatchTable";
 
 export default class MatchesPage extends Component {
     constructor(props) {
@@ -7,19 +11,27 @@ export default class MatchesPage extends Component {
         this.state = {
             loading: false,
             error: false,
-            leagueUUID: ''
+            league: {}
         }
     }
 
     componentDidMount() {
-        this.setState({leagueUUID: this.props.match.params.id})
+        get(url + api + league + this.props.match.params.id + matches, Cookies.get("token"))
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                this.setState({league: res})
+            })
+            .catch(err => console.log(err))
     }
 
     render() {
         return (
             <>
                 <TopBar/>
-                {this.state.leagueUUID}
+                <div className="center">
+                    <MatchTable rows={this.state.league.matchDTOS}/>
+                </div>
             </>
         )
     }
