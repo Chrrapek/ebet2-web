@@ -38,6 +38,7 @@ class LoginPage extends Component {
         post(url + api + user + login, {password: this.state.password, username: this.state.username})
             .catch(() => this.showErrorSnackbar("Nie można nawiązać połączenia z serwerem"))
             .then(res => this.handleErrors(res))
+            .then(res => res.json())
             .then(res => {
                 Cookies.set('username', this.state.username);
                 Cookies.set('token', res.token);
