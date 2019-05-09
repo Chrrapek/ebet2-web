@@ -23,7 +23,7 @@ export const styles = theme => ({
 
 export const CustomTable = withStyles(theme => ({
     head: {
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.secondary.light,
         color: theme.palette.common.white,
         fontSize: "1em"
     },

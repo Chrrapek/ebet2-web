@@ -39,6 +39,7 @@ class RegisterPage extends Component {
             .then(this.handleErrors)
             .then(response => response.json())
             .then(res => {
+                Cookies.set('userUuid', res.userUUID);
                 Cookies.set('token', res.token);
                 Cookies.set('username', res.username);
                 this.props.history.push('/leagues');

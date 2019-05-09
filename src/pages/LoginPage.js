@@ -40,6 +40,7 @@ class LoginPage extends Component {
             .then(res => this.handleErrors(res))
             .then(res => res.json())
             .then(res => {
+                Cookies.set('userUuid', res.userUUID);
                 Cookies.set('username', this.state.username);
                 Cookies.set('token', res.token);
                 this.props.history.push('/leagues');
