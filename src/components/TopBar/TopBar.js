@@ -61,6 +61,7 @@ class TopBar extends Component {
 
     logOut = () => {
         Cookies.remove("token");
+        Cookies.remove("username");
         this.props.history.push("/");
     };
 

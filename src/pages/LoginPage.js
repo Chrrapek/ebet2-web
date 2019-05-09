@@ -26,23 +26,26 @@ class LoginPage extends Component {
     };
 
     handleErrors = (res) => {
-        if (res.statusCode === 400) {
-            throw new Error("Błędne dane logowania");
+        console.log("To przyszło: ", res);
+        if (res.status === 404) {
+            throw Error("Błędne dane logowania")
+        } else if (res.status >= 200 && res.status < 300) {
+            return res;
         }
-        return res
     };
 
     handleSubmit = (event) => {
         event.preventDefault();
         post(url + api + user + login, {password: this.state.password, username: this.state.username})
-            .then(response => response.json())
-            .then(this.handleErrors)
+            .catch(() => this.showErrorSnackbar("Nie można nawiązać połączenia z serwerem"))
+            .then(res => this.handleErrors(res))
             .then(res => {
                 Cookies.set('username', this.state.username);
-                Cookies.set('token', res);
+                Cookies.set('token', res.token);
                 this.props.history.push('/leagues');
             })
-            .catch(err => this.showErrorSnackbar(err))
+            .catch(err => this.showErrorSnackbar(err.message))
+
     };
 
     handleClose = (event, reason) => {
@@ -54,7 +57,7 @@ class LoginPage extends Component {
     };
 
     showErrorSnackbar = (reason) => {
-        this.setState({errorReason: reason.message, open: true})
+        this.setState({errorReason: reason, open: true})
     };
 
     render() {

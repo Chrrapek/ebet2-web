@@ -25,23 +25,25 @@ class RegisterPage extends Component {
     };
 
     handleErrors = (res) => {
-        if (!res.ok) {
+        if (res.status === 400) {
             throw new Error("Konto o takiej nazwie już istnieje");
+        } else {
+            return res
         }
-        return res
     };
 
     handleSubmit = (event) => {
         event.preventDefault();
         post(url + api + user + register, {password: this.state.password, username: this.state.username})
+            .catch(() => this.showErrorSnackbar("Nie można nawiązać połączenia z serwerem"))
             .then(this.handleErrors)
             .then(response => response.json())
             .then(res => {
-                Cookies.set('token', res["token"]);
-                Cookies.set('username', res["username"]);
+                Cookies.set('token', res.token);
+                Cookies.set('username', res.username);
                 this.props.history.push('/leagues');
             })
-            .catch(err => this.showErrorSnackbar(err))
+            .catch(err => this.showErrorSnackbar(err.message))
     };
 
     handleClose = (event, reason) => {
@@ -58,7 +60,7 @@ class RegisterPage extends Component {
 
 
     showErrorSnackbar = (reason) => {
-        this.setState({errorReason: reason.message, open: true})
+        this.setState({errorReason: reason, open: true})
     };
 
     render() {
