@@ -124,6 +124,7 @@ class TopBar extends Component {
                         <Menu
                             id="menu-appbar"
                             anchorEl={this.state.anchorEl}
+                            disableAutoFocusItem={true}
                             anchorOrigin={{
                                 vertical: 'top',
                                 horizontal: 'right',
