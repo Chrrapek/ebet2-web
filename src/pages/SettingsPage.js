@@ -17,7 +17,7 @@ export default class SettingsPage extends Component {
         return (
             <>
                 <TopBar/>
-                Ustawienia
+
             </>
         )
     }

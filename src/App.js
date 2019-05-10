@@ -5,7 +5,6 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import LoginPage from "./pages/LoginPage";
 import LeaguesPage from "./pages/LeaguesPage";
 import RegisterPage from "./pages/RegisterPage";
-import ResultsPage from "./pages/ResultsPage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import SettingsPage from "./pages/SettingsPage";
 import MatchesPage from "./pages/MatchesPage";
@@ -41,7 +40,6 @@ class App extends Component {
                     <Route exact path="/" component={LoginPage}/>
                     <Route path="/register" component={RegisterPage}/>
                     <PrivateRoute exact path="/leagues" component={LeaguesPage}/>
-                    <PrivateRoute path="/results" component={ResultsPage}/>
                     <PrivateRoute path="/settings" component={SettingsPage}/>
                     <PrivateRoute path="/leagues/:id" component={MatchesPage}/>
                 </MuiThemeProvider>

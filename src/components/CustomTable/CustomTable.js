@@ -18,6 +18,9 @@ export const styles = theme => ({
             backgroundColor: theme.palette.background.default,
         },
     },
+    endedRow: {
+        backgroundColor: "#636363"
+    }
 });
 
 

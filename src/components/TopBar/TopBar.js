@@ -2,25 +2,18 @@ import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import MenuIcon from '@material-ui/icons/Menu';
 import LockIcon from '@material-ui/icons/Lock'
 import PersonIcon from '@material-ui/icons/Person';
-import TableChartIcon from '@material-ui/icons/TableChart';
 import SettingsIcon from '@material-ui/icons/Settings';
-import RankingIcon from '@material-ui/icons/FormatListNumberedRtl';
 import Cookies from 'js-cookie';
-import {withRouter} from "react-router-dom";
+import {NavLink, withRouter} from "react-router-dom";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import {Divider} from "@material-ui/core";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Drawer from "@material-ui/core/Drawer";
 import styles from "./TopBarStyles";
 
 class TopBar extends Component {
@@ -32,13 +25,6 @@ class TopBar extends Component {
         }
     }
 
-    toggleDrawer = (toState) => {
-        this.setState({
-            drawerOpen: toState
-        });
-    };
-
-
     handleMenu = event => {
         this.setState({anchorEl: event.currentTarget});
     };
@@ -47,14 +33,6 @@ class TopBar extends Component {
         this.setState({anchorEl: null});
     };
 
-    goToLeagues() {
-        this.props.history.push("/leagues");
-    }
-
-    goToResults() {
-        this.props.history.push("/results");
-    }
-
     goToSettings() {
         this.props.history.push("/settings");
     }
@@ -62,58 +40,22 @@ class TopBar extends Component {
     logOut = () => {
         Cookies.remove("token");
         Cookies.remove("username");
+        Cookies.remove("userUuid");
         this.props.history.push("/");
     };
 
     render() {
         const {classes} = this.props;
         const open = Boolean(this.state.anchorEl);
-        const sideList = (
-            <div className={classes.list}>
-                <List>
-                    {['Lista lig', 'Pełen ranking'].map((text, index) => (
-                        <ListItem button key={text}
-                                  onClick={index % 2 === 0 ? () => this.goToLeagues() : () => this.goToResults()}>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <TableChartIcon/> : <RankingIcon/>}
-                            </ListItemIcon>
-                            <ListItemText primary={text}/>
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider/>
-                <List>
-                    <ListItem button key={"Ustawienia"} onClick={() => this.goToSettings()}>
-                        <ListItemIcon>
-                            <SettingsIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary={"Ustawienia"}/>
-                    </ListItem>
-                </List>
-            </div>
-        );
 
         return (
             <div className={classes.root}>
                 <AppBar position="static">
-                    <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu"
-                                    onClick={() => this.toggleDrawer(true)}>
-                            <MenuIcon/>
-                        </IconButton>
-                        <Drawer open={this.state.drawerOpen} onClose={() => this.toggleDrawer(false)}>
-                            <div
-                                tabIndex={0}
-                                role="button"
-                                onClick={() => this.toggleDrawer(false)}
-                                onKeyDown={() => this.toggleDrawer(false)}
-                            >
-                                {sideList}
-                            </div>
-                        </Drawer>
-                        <Typography variant="h6" color="inherit" className={classes.grow}>
+                    <Toolbar className={classes.toolbar}>
+                        <NavLink to={"/leagues"} className={classes.navLink}>
                             eBet2
-                        </Typography>
+                        </NavLink>
+
                         <IconButton
                             aria-owns={open ? 'menu-appbar' : undefined}
                             aria-haspopup="true"
@@ -144,6 +86,13 @@ class TopBar extends Component {
                                               primary={"Zalogowano jako " + Cookies.get("username")}/>
                             </MenuItem>
                             <Divider/>
+
+                            <MenuItem button key={"Ustawienia"} onClick={() => this.goToSettings()}>
+                                <ListItemIcon>
+                                    <SettingsIcon/>
+                                </ListItemIcon>
+                                <ListItemText primary={"Ustawienia"}/>
+                            </MenuItem>
 
                             <MenuItem className={classes.menuItem} onClick={() => this.logOut()}>
                                 <ListItemIcon className={classes.icon}>

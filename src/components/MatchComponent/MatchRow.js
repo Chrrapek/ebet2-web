@@ -94,7 +94,7 @@ class MatchRow extends Component {
     render() {
         const {classes, match} = this.props;
         return (
-            <TableRow className={classes.row} key={match.id}>
+            <TableRow className={match.result === "NOT_SET" ? classes.row : classes.endedRow} key={match.id}>
                 <CustomTable component="th" scope="match">{match.host}</CustomTable>
                 <CustomTable align="right">{match.guest}</CustomTable>
                 <CustomTable align="center">

@@ -15,6 +15,16 @@ const styles = theme => ({
         fontWeight: "bold",
         color: "black"
     },
+    toolbar: {
+        display: "flex",
+        justifyContent: "space-between"
+    },
+    navLink: {
+        textDecoration: 'none',
+        color: 'unset',
+        fontSize: '1.4em',
+        fontWeight: 'bold'
+    },
     menuItem: {
         '&:focus': {
             backgroundColor: theme.palette.primary.main,
