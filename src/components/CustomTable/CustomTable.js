@@ -9,7 +9,13 @@ export const styles = theme => ({
     },
     table: {
         minWidth: 700,
-        maxWidth: "80%",
+        maxWidth: "60%",
+        marginTop: "1.5em",
+        boxShadow: "6px 5px 17px 1px #929292",
+    },
+    resultsTable: {
+        minWidth: 300,
+        maxWidth: "30%",
         marginTop: "1.5em",
         boxShadow: "6px 5px 17px 1px #929292",
     },

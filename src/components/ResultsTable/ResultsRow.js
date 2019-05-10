@@ -1,17 +1,14 @@
 import React from 'react';
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import {CustomTable, styles} from "../CustomTable/CustomTable";
 import withStyles from "@material-ui/core/styles/withStyles";
 
-const ResultsRow = ({classes}) => {
+const ResultsRow = ({classes, result}) => {
     return (
-        <TableHead>
-            <TableRow>
-                <CustomTable>Użytkownik </CustomTable>
-                <CustomTable align="right">Liczba punktów</CustomTable>
-            </TableRow>
-        </TableHead>
+        <TableRow className={classes.row}>
+            <CustomTable component="th" scope="match">{result.username}</CustomTable>
+            <CustomTable align="right">{result.pointCounter}</CustomTable>
+        </TableRow>
     )
 };
 

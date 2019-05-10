@@ -8,4 +8,5 @@ export const register = "/register";
 export const matches = "/matches";
 export const bets = "/bets";
 export const bet = "/bet";
+export const results = "/results";
 

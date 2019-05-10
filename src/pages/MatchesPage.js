@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import TopBar from "../components/TopBar/TopBar";
 import {get} from "../model/httpRequests";
-import {api, league, matches, url} from "../model/constants";
+import {api, league, matches, results, url} from "../model/constants";
 import Cookies from 'js-cookie';
 import MatchTable from "../components/MatchComponent/MatchTable";
+import ResultsTable from "../components/ResultsTable/ResultsTable";
 
 export default class MatchesPage extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ export default class MatchesPage extends Component {
         this.state = {
             loading: false,
             error: false,
-            league: {}
+            league: {},
+            results: {}
         }
     }
 
@@ -20,6 +22,13 @@ export default class MatchesPage extends Component {
             {}, {token: Cookies.get("token")})
             .then(res => res.json())
             .then(res => this.setState({league: res}))
+            .catch(err => console.log(err));
+
+        get(url + api + league + this.props.match.params.id + results,
+            {uuid: this.props.match.params.id},
+            {token: Cookies.get("token")})
+            .then(res => res.json())
+            .then(res => this.setState({results: res}))
             .catch(err => console.log(err))
     }
 
@@ -27,8 +36,9 @@ export default class MatchesPage extends Component {
         return (
             <>
                 <TopBar/>
-                <div className="center">
+                <div className="spaceBetween">
                     <MatchTable rows={this.state.league.matchDTOS}/>
+                    <ResultsTable results={this.state.results.generalResult}/>
                 </div>
             </>
         )

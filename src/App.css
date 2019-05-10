@@ -7,6 +7,11 @@
   justify-content: center;
 }
 
+.spaceBetween {
+    display: flex;
+    justify-content: space-around;
+}
+
 .tm1 {
     margin-top: 1em;
 }
