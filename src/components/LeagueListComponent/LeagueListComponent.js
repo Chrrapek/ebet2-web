@@ -6,7 +6,8 @@ import Switch from "@material-ui/core/Switch";
 import List from "@material-ui/core/List";
 
 const LeagueListComponent = ({archived, leagues, classes, onSwitchChange, goToMatches}) => {
-    const filteredLeagues = leagues.filter(x => x.archived === archived);
+    const currentLeagues = leagues.filter(x => !x.archived);
+    const archievedLeagues = leagues.filter(x => x.archived);
     const switcher = <Switch
         color="primary"
         checked={archived}
@@ -16,19 +17,32 @@ const LeagueListComponent = ({archived, leagues, classes, onSwitchChange, goToMa
 
     return (
         <>
-            <div className="center tm1">
-                <FormControlLabel control={switcher} label={"Pokaż ligi archiwalne"} labelPlacement="top"/>
-            </div>
             <List className={classes.cardList}>
 
                 {
-                    filteredLeagues.length === 0
-                        ? <h1>Brak lig</h1>
-                        : filteredLeagues.map((league, i) => {
+                    currentLeagues.length === 0
+                        ? <h1>Brak lig aktualnych</h1>
+                        : currentLeagues.map((league, i) => {
                             return <LeagueComponent league={league} key={i} goToMatches={goToMatches}/>
                         })
                 }
             </List>
+            <div className="center tm1">
+                <FormControlLabel control={switcher} label={"Pokaż ligi archiwalne"} labelPlacement="top"/>
+            </div>
+            {archived ?
+                <List className={classes.cardList}>
+                    {
+                        archievedLeagues.length === 0
+                            ? <h1>Brak lig archiwalnych</h1>
+                            : archievedLeagues.map((league, i) => {
+                                return <LeagueComponent league={league} key={i} goToMatches={goToMatches}/>
+                            })
+                    }
+                </List>
+                :
+                null
+            }
         </>
     )
 };

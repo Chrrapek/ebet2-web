@@ -6,7 +6,7 @@ import {Button} from "@material-ui/core";
 import Check from "@material-ui/icons/Check"
 import * as PropTypes from "prop-types";
 import {api, bet, bets, url} from "../../model/constants";
-import {betterGet, post} from "../../model/httpRequests";
+import {get, post, put} from "../../model/httpRequests";
 import Cookies from 'js-cookie';
 
 class MatchRow extends Component {
@@ -14,7 +14,8 @@ class MatchRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected: -1
+            selected: -1,
+            betUuid: ''
         };
     }
 
@@ -41,11 +42,26 @@ class MatchRow extends Component {
             matchUUID: match.uuid,
             betTyp: type
         }, Cookies.get('token'))
-            .then(() => this.getSelections());
+            .then(res => res.text())
+            .then(res => {
+                this.setState({betUuid: res});
+                this.getSelections()
+            });
     };
 
     changeBet = (type) => {
-
+        const {match} = this.props;
+        put(url + api + bet, {
+            matchUUID: match.uuid,
+            userUUID: Cookies.get('userUuid'),
+            betTyp: type,
+            uuid: this.state.betUuid
+        }, Cookies.get('token'))
+            .then(res => res.json())
+            .then(res => {
+                console.log("Changed bet ", res);
+                this.getSelections()
+            });
     };
 
     componentDidMount() {
@@ -54,18 +70,28 @@ class MatchRow extends Component {
 
     getSelections = () => {
         const {match} = this.props;
-        betterGet(url + api + bets,
+        get(url + api + bets,
             {matchUUID: match.uuid},
             {Authorization: Cookies.get("token")})
             .then(res => res.json())
             .then(res => {
                 if (res.length > 0) {
-                    console.log("Res w cdm", res);
                     const userUuid = Cookies.get("userUuid");
                     const bet = res.filter(x => x.userUUID === userUuid);
+                    this.setState({betUuid: bet[0].uuid})
                     this.selectCorrespondingButton(bet[0]);
                 }
             })
+    };
+
+    evaluateBetClick = (position, type) => {
+        if (this.state.selected === -1) {
+            this.addBet(type)
+        } else if (this.state.selected !== position) {
+            this.changeBet(type)
+        } else {
+            //removing bet
+        }
     };
 
     render() {
@@ -77,16 +103,14 @@ class MatchRow extends Component {
                 <CustomTable align="center">
                     <Button variant="contained" color={this.state.selected === 0 ? "secondary" : "primary"}
                             className={classes.button}
-                            onClick={() => this.state.selected === -1 ?
-                                this.addBet("HOST_WON") : this.changeBet("HOST_WON")}>
+                            onClick={() => this.evaluateBetClick(0, "HOST_WON")}>
                         <Check/>
                     </Button>
                 </CustomTable>
                 <CustomTable align="center">
                     <Button variant="contained" color={this.state.selected === 1 ? "secondary" : "primary"}
                             className={classes.button}
-                            onClick={() => this.state.selected === -1 ?
-                                this.addBet("DRAW") : this.changeBet("DRAW")}>
+                            onClick={() => this.evaluateBetClick(1, "DRAW")}>
                         <Check/>
                     </Button>
                 </CustomTable>
@@ -101,6 +125,7 @@ class MatchRow extends Component {
             </TableRow>
         )
     }
+
 }
 
 MatchRow.propTypes = {

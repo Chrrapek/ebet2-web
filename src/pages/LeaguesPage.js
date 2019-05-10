@@ -17,7 +17,7 @@ export default class LeaguesPage extends Component {
     }
 
     componentDidMount() {
-        get(url + api + leagues, Cookies.get("token"))
+        get(url + api + leagues, {}, {token: Cookies.get("token")})
             .then(response => response.json())
             .then(res => this.setState({leaguesArray: res}))
             .catch(err => console.log(err))
