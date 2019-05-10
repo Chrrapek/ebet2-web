@@ -6,7 +6,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 const ResultsRow = ({classes, result}) => {
     return (
         <TableRow className={classes.row}>
-            <CustomTable component="th" scope="match">{result.username}</CustomTable>
+            <CustomTable component="th" scope="match">{result.userUUID}</CustomTable>
             <CustomTable align="right">{result.pointCounter}</CustomTable>
         </TableRow>
     )

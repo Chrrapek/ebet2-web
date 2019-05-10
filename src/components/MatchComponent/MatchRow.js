@@ -97,6 +97,7 @@ class MatchRow extends Component {
             <TableRow className={match.result === "NOT_SET" ? classes.row : classes.endedRow} key={match.id}>
                 <CustomTable component="th" scope="match">{match.host}</CustomTable>
                 <CustomTable align="right">{match.guest}</CustomTable>
+                <CustomTable align="right">{match.round}</CustomTable>
                 <CustomTable align="center">
                     <Button variant="contained" color={this.state.selected === 0 ? "secondary" : "primary"}
                             className={classes.button}

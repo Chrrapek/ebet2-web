@@ -10,6 +10,7 @@ const MatchHeader = ({classes}) => {
             <TableRow>
                 <CustomTable>Gospodarze </CustomTable>
                 <CustomTable align="right">Goście</CustomTable>
+                <CustomTable align="right">Runda</CustomTable>
                 <CustomTable align="center">Obstaw gospodarzy</CustomTable>
                 <CustomTable align="center">Obstaw remis</CustomTable>
                 <CustomTable align="center">Obstaw gości</CustomTable>
