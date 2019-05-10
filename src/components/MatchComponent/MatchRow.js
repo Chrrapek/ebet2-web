@@ -72,13 +72,16 @@ class MatchRow extends Component {
             {Authorization: Cookies.get("token")})
             .then(res => res.json())
             .then(res => {
-                if (res.length > 0) {
+                if (res !== undefined) {
                     const userUuid = Cookies.get("userUuid");
                     const bet = res.filter(x => x.userUUID === userUuid);
-                    this.setState({betUuid: bet[0].uuid})
-                    this.selectCorrespondingButton(bet[0]);
+                    if (bet !== undefined && bet.length > 0) {
+                        this.setState({betUuid: bet[0].uuid});
+                        this.selectCorrespondingButton(bet[0]);
+                    }
                 }
             })
+            .catch(console.error)
     };
 
     evaluateBetClick = (position, type) => {
