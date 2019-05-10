@@ -8,7 +8,6 @@ import {styles} from "../CustomTable/CustomTable"
 
 
 const MatchTable = ({classes, rows}) => {
-    console.log(rows);
     return (
         <Table className={classes.table}>
             <MatchHeader/>

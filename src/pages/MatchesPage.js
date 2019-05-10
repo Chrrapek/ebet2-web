@@ -19,10 +19,7 @@ export default class MatchesPage extends Component {
         get(url + api + league + this.props.match.params.id + matches,
             {}, {token: Cookies.get("token")})
             .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                this.setState({league: res})
-            })
+            .then(res => this.setState({league: res}))
             .catch(err => console.log(err))
     }
 

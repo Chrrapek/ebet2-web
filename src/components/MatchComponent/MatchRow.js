@@ -42,9 +42,9 @@ class MatchRow extends Component {
             matchUUID: match.uuid,
             betTyp: type
         }, Cookies.get('token'))
-            .then(res => res.text())
+            .then(res => res.json())
             .then(res => {
-                this.setState({betUuid: res});
+                this.setState({betUuid: res.uuid});
                 this.getSelections()
             });
     };
@@ -58,10 +58,7 @@ class MatchRow extends Component {
             uuid: this.state.betUuid
         }, Cookies.get('token'))
             .then(res => res.json())
-            .then(res => {
-                console.log("Changed bet ", res);
-                this.getSelections()
-            });
+            .then(res => this.getSelections());
     };
 
     componentDidMount() {
