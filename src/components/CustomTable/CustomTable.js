@@ -34,7 +34,8 @@ export const CustomTable = withStyles(theme => ({
     head: {
         backgroundColor: theme.palette.secondary.light,
         color: theme.palette.common.white,
-        fontSize: "1em"
+        fontSize: "1em",
+        border: "1px solid " + theme.palette.secondary.light,
     },
     body: {
         fontSize: 14,
