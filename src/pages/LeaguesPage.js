@@ -4,6 +4,7 @@ import LeagueListComponent from "../components/LeagueListComponent/LeagueListCom
 import {get} from "../model/httpRequests";
 import {api, leagues, url} from "../model/constants";
 import Cookies from "js-cookie";
+import SearchField from "../components/SearchField/SearchField";
 
 export default class LeaguesPage extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ export default class LeaguesPage extends Component {
             loading: false,
             error: false,
             leaguesArray: [],
-            archived: false
+            archived: false,
+            filterText: ''
         }
     }
 
@@ -32,12 +34,18 @@ export default class LeaguesPage extends Component {
         this.props.history.push(`/leagues/${leagueUUID}`);
     };
 
+    handleSearchChange = (event) => {
+        this.setState({filterText: event.target.value})
+    };
+
     render() {
         return (
             <>
                 <TopBar/>
+                <SearchField searchChange={this.handleSearchChange}/>
                 <LeagueListComponent archived={this.state.archived} onSwitchChange={this.changeSwitchState}
-                                     leagues={this.state.leaguesArray} goToMatches={this.goToMatches}/>
+                                     leagues={this.state.leaguesArray.filter(x => x.name.includes(this.state.filterText))}
+                                     goToMatches={this.goToMatches}/>
             </>
         )
     }
