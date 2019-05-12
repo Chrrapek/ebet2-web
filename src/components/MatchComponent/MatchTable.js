@@ -5,17 +5,23 @@ import TableBody from "@material-ui/core/TableBody";
 import MatchRow from "./MatchRow";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {styles} from "../CustomTable/CustomTable"
+import FinishedMatchRow from "./FinishedMatchRow";
+import FinishedMatchHeader from "./FinishedMatchHeader";
 
 
-const MatchTable = ({classes, rows}) => {
+const MatchTable = ({classes, rows, archived}) => {
     return (
-        <Table className={classes.table}>
-            <MatchHeader/>
+        <Table className={archived ? classes.resultsTable : classes.table}>
+            {archived ? <FinishedMatchHeader/> : <MatchHeader/>}
             <TableBody>
                 {
                     rows !== undefined ?
                         rows.map((row, i) => {
-                            return <MatchRow key={i} match={row}/>
+                            if (!archived) {
+                                return <MatchRow key={i} match={row}/>
+                            } else {
+                                return <FinishedMatchRow key={i} result={row}/>
+                            }
                         }) :
                         null
                 }

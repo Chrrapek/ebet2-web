@@ -13,7 +13,8 @@ export default class MatchesPage extends Component {
             loading: false,
             error: false,
             league: {},
-            results: {}
+            results: {},
+            archived: false
         }
     }
 
@@ -21,15 +22,18 @@ export default class MatchesPage extends Component {
         get(url + api + league + this.props.match.params.id + matches,
             {}, {token: Cookies.get("token")})
             .then(res => res.json())
-            .then(res => this.setState({league: res}))
-            .catch(err => console.log(err));
+            .then(res => {
+                this.setState({league: res});
+                this.setState({archived: res.archived})
+            })
+            .catch(console.log);
 
         get(url + api + league + this.props.match.params.id + results,
             {uuid: this.props.match.params.id},
             {token: Cookies.get("token")})
             .then(res => res.json())
             .then(res => this.setState({results: res}))
-            .catch(err => console.log(err))
+            .catch(console.log)
     }
 
     render() {
@@ -37,8 +41,20 @@ export default class MatchesPage extends Component {
             <>
                 <TopBar/>
                 <div className="spaceBetween">
-                    <MatchTable rows={this.state.league.matchDTOS}/>
-                    <ResultsTable results={this.state.results.generalResult}/>
+                    {
+                        this.state.archived ?
+                            <>
+                                <ResultsTable archived={this.state.archived}
+                                              results={this.state.results.generalResult}/>
+                                <MatchTable archived={this.state.archived} rows={this.state.league.matchDTOS}/>
+                            </> :
+                            <>
+                                <MatchTable archived={this.state.archived} rows={this.state.league.matchDTOS}/>
+                                <ResultsTable archived={this.state.archived}
+                                              results={this.state.results.generalResult}/>
+                            </>
+                    }
+
                 </div>
             </>
         )

@@ -8,14 +8,14 @@ export const styles = theme => ({
         overflowX: 'auto',
     },
     table: {
-        minWidth: 700,
-        maxWidth: "60%",
+        minWidth: 600,
+        width: "40%",
         marginTop: "1.5em",
         boxShadow: "6px 5px 17px 1px #929292",
     },
     resultsTable: {
         minWidth: 300,
-        maxWidth: "30%",
+        width: "30%",
         marginTop: "1.5em",
         boxShadow: "6px 5px 17px 1px #929292",
     },
@@ -25,7 +25,12 @@ export const styles = theme => ({
         },
     },
     endedRow: {
-        backgroundColor: "#636363"
+        '&:nth-of-type(odd)': {
+            backgroundColor: "#dadada",
+        },
+        '&:nth-of-type(even)': {
+            backgroundColor: "#e8e8e8",
+        },
     }
 });
 
@@ -35,7 +40,7 @@ export const CustomTable = withStyles(theme => ({
         backgroundColor: theme.palette.secondary.light,
         color: theme.palette.common.white,
         fontSize: "1em",
-        border: "1px solid " + theme.palette.secondary.light,
+        borderBottom: "1px solid " + theme.palette.secondary.light,
     },
     body: {
         fontSize: 14,

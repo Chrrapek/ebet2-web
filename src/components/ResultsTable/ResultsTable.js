@@ -8,9 +8,9 @@ import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
 
 
-const ResultsTable = ({classes, results}) => {
+const ResultsTable = ({classes, results, archived}) => {
     return (
-        <Table className={classes.resultsTable}>
+        <Table className={archived ? classes.table : classes.resultsTable}>
             <TableHead>
                 <TableRow>
                     <CustomTable>Użytkownik </CustomTable>
