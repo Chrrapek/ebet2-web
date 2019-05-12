@@ -5,6 +5,7 @@ import {api, league, matches, results, url} from "../model/constants";
 import Cookies from 'js-cookie';
 import MatchTable from "../components/MatchComponent/MatchTable";
 import ResultsTable from "../components/ResultsTable/ResultsTable";
+import CustomizedSnackbar from "../components/CustomizedSnackbar/CustomizedSnackbar";
 
 export default class MatchesPage extends Component {
     constructor(props) {
@@ -14,7 +15,8 @@ export default class MatchesPage extends Component {
             error: false,
             league: {},
             results: {},
-            archived: false
+            archived: false,
+            errorReason: ''
         }
     }
 
@@ -36,6 +38,18 @@ export default class MatchesPage extends Component {
             .catch(console.log)
     }
 
+    handleOpen = (reason) => {
+        this.setState({error: true, errorReason: reason})
+    };
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        this.setState({error: false});
+    };
+
     render() {
         return (
             <>
@@ -46,16 +60,20 @@ export default class MatchesPage extends Component {
                             <>
                                 <ResultsTable archived={this.state.archived}
                                               results={this.state.results.generalResult}/>
-                                <MatchTable archived={this.state.archived} rows={this.state.league.matchDTOS}/>
+                                <MatchTable handleErrorOpen={this.handleOpen}
+                                            archived={this.state.archived} rows={this.state.league.matchDTOS}/>
                             </> :
                             <>
-                                <MatchTable archived={this.state.archived} rows={this.state.league.matchDTOS}/>
+                                <MatchTable handleErrorOpen={this.handleOpen}
+                                            archived={this.state.archived} rows={this.state.league.matchDTOS}/>
                                 <ResultsTable archived={this.state.archived}
                                               results={this.state.results.generalResult}/>
                             </>
                     }
 
                 </div>
+                <CustomizedSnackbar variant="error" text={this.state.errorReason} open={this.state.error}
+                                    handler={this.handleClose}/>
             </>
         )
     }

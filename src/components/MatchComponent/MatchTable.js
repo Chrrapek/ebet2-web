@@ -9,7 +9,7 @@ import FinishedMatchRow from "./FinishedMatchRow";
 import FinishedMatchHeader from "./FinishedMatchHeader";
 
 
-const MatchTable = ({classes, rows, archived}) => {
+const MatchTable = ({classes, rows, archived, handleErrorOpen}) => {
     return (
         <Table className={archived ? classes.resultsTable : classes.table}>
             {archived ? <FinishedMatchHeader/> : <MatchHeader/>}
@@ -18,7 +18,8 @@ const MatchTable = ({classes, rows, archived}) => {
                     rows !== undefined ?
                         rows.map((row, i) => {
                             if (!archived) {
-                                return <MatchRow key={i} match={row}/>
+                                return <MatchRow handleErrorOpen={handleErrorOpen}
+                                                 key={i} match={row}/>
                             } else {
                                 return <FinishedMatchRow key={i} result={row}/>
                             }

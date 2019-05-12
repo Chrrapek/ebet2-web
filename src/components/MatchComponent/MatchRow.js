@@ -37,20 +37,25 @@ class MatchRow extends Component {
     };
 
     addBet = (type) => {
-        const {match} = this.props;
+        const {match, handleErrorOpen} = this.props;
         post(url + api + bet, {
             matchUUID: match.uuid,
             betTyp: type
         }, Cookies.get('token'))
             .then(res => res.json())
             .then(res => {
-                this.setState({betUuid: res.uuid});
-                this.getSelections()
-            });
+                if (res.ok) {
+                    this.setState({betUuid: res.uuid});
+                    this.getSelections()
+                } else {
+                    handleErrorOpen(res.message)
+                }
+            })
+            .catch(console.log)
     };
 
     changeBet = (type) => {
-        const {match} = this.props;
+        const {match, handleErrorOpen} = this.props;
         put(url + api + bet, {
             matchUUID: match.uuid,
             userUUID: Cookies.get('userUuid'),
@@ -58,7 +63,14 @@ class MatchRow extends Component {
             uuid: this.state.betUuid
         }, Cookies.get('token'))
             .then(res => res.json())
-            .then(res => this.getSelections());
+            .then(res => {
+                if (res.ok) {
+                    this.getSelections()
+                } else {
+                    handleErrorOpen(res.message)
+                }
+            })
+            .catch(console.log);
     };
 
     componentDidMount() {
@@ -66,7 +78,7 @@ class MatchRow extends Component {
     };
 
     getSelections = () => {
-        const {match} = this.props;
+        const {match, handleErrorOpen} = this.props;
         get(url + api + bets,
             {matchUUID: match.uuid},
             {Authorization: Cookies.get("token")})
@@ -81,7 +93,7 @@ class MatchRow extends Component {
                     }
                 }
             })
-            .catch(console.error)
+            .catch(err => handleErrorOpen(err.message));
     };
 
     evaluateBetClick = (position, type) => {

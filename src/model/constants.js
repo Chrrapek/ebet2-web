@@ -1,4 +1,4 @@
-export const url = "http://localhost:8080";
+export const url = "http://ebet2-api.herokuapp.com";
 export const api = "/api";
 export const user = "/user";
 export const login = "/login";
