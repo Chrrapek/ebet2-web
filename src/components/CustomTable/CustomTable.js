@@ -8,13 +8,11 @@ export const styles = theme => ({
         overflowX: 'auto',
     },
     table: {
-        minWidth: 600,
         width: "40%",
         marginTop: "1.5em",
         boxShadow: "6px 5px 17px 1px #929292",
     },
     resultsTable: {
-        minWidth: 300,
         width: "30%",
         marginTop: "1.5em",
         boxShadow: "6px 5px 17px 1px #929292",

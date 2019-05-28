@@ -46,7 +46,7 @@ class MatchRow extends Component {
             .then(res => {
                 if (res.ok) {
                     this.setState({betUuid: res.uuid});
-                    this.getSelections()
+                    this.getSelection()
                 } else {
                     handleErrorOpen(res.message)
                 }
@@ -65,7 +65,7 @@ class MatchRow extends Component {
             .then(res => res.json())
             .then(res => {
                 if (res.ok) {
-                    this.getSelections()
+                    this.getSelection()
                 } else {
                     handleErrorOpen(res.message)
                 }
@@ -74,10 +74,10 @@ class MatchRow extends Component {
     };
 
     componentDidMount() {
-        this.getSelections()
+        this.getSelection()
     };
 
-    getSelections = () => {
+    getSelection = () => {
         const {match, handleErrorOpen} = this.props;
         get(url + api + bets,
             {matchUUID: match.uuid},
@@ -106,6 +106,20 @@ class MatchRow extends Component {
         }
     };
 
+    parseDate = (dateString) => {
+        const date = new Date(dateString);
+        const options = {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+        };
+        const formatter = new Intl.DateTimeFormat("pl-PL", options);
+
+        return formatter.format(date);
+    };
+
     render() {
         const {classes, match} = this.props;
         return (
@@ -113,6 +127,7 @@ class MatchRow extends Component {
                 <CustomTable component="th" scope="match">{match.host}</CustomTable>
                 <CustomTable align="right">{match.guest}</CustomTable>
                 <CustomTable align="right">{match.round}</CustomTable>
+                <CustomTable align="center">{this.parseDate(match.matchStartDate)}</CustomTable>
                 <CustomTable align="center">
                     <Button variant="contained" color={this.state.selected === 0 ? "secondary" : "primary"}
                             className={classes.button}

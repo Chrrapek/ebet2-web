@@ -55,22 +55,10 @@ export default class MatchesPage extends Component {
             <>
                 <TopBar/>
                 <div className="spaceBetween">
-                    {
-                        this.state.archived ?
-                            <>
-                                <ResultsTable archived={this.state.archived}
-                                              results={this.state.results.generalResult}/>
-                                <MatchTable handleErrorOpen={this.handleOpen}
-                                            archived={this.state.archived} rows={this.state.league.matchDTOS}/>
-                            </> :
-                            <>
-                                <MatchTable handleErrorOpen={this.handleOpen}
-                                            archived={this.state.archived} rows={this.state.league.matchDTOS}/>
-                                <ResultsTable archived={this.state.archived}
-                                              results={this.state.results.generalResult}/>
-                            </>
-                    }
-
+                    <MatchTable handleErrorOpen={this.handleOpen}
+                                archived={this.state.archived} rows={this.state.league.matchDTOS}/>
+                    <ResultsTable archived={this.state.archived}
+                                  results={this.state.results.generalResult}/>
                 </div>
                 <CustomizedSnackbar variant="error" text={this.state.errorReason} open={this.state.error}
                                     handler={this.handleClose}/>

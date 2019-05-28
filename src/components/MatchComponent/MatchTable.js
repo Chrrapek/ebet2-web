@@ -16,12 +16,12 @@ const MatchTable = ({classes, rows, archived, handleErrorOpen}) => {
             <TableBody>
                 {
                     rows !== undefined ?
-                        rows.map((row, i) => {
+                        rows.map(row => {
                             if (!archived) {
                                 return <MatchRow handleErrorOpen={handleErrorOpen}
-                                                 key={i} match={row}/>
+                                                 key={row.uuid} match={row}/>
                             } else {
-                                return <FinishedMatchRow key={i} result={row}/>
+                                return <FinishedMatchRow key={row.uuid} result={row}/>
                             }
                         }) :
                         null

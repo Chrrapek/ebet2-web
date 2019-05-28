@@ -22,8 +22,8 @@ const LeagueListComponent = ({archived, leagues, classes, onSwitchChange, goToMa
                 {
                     currentLeagues.length === 0
                         ? <h1>Brak lig aktualnych</h1>
-                        : currentLeagues.map((league, i) => {
-                            return <LeagueComponent league={league} key={i} goToMatches={goToMatches}/>
+                        : currentLeagues.map(league => {
+                            return <LeagueComponent league={league} key={league.name} goToMatches={goToMatches}/>
                         })
                 }
             </List>
@@ -35,8 +35,8 @@ const LeagueListComponent = ({archived, leagues, classes, onSwitchChange, goToMa
                     {
                         archievedLeagues.length === 0
                             ? <h1>Brak lig archiwalnych</h1>
-                            : archievedLeagues.map((league, i) => {
-                                return <LeagueComponent league={league} key={i} goToMatches={goToMatches}/>
+                            : archievedLeagues.map(league => {
+                                return <LeagueComponent league={league} key={league.name} goToMatches={goToMatches}/>
                             })
                     }
                 </List>

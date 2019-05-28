@@ -22,7 +22,7 @@ const ResultsTable = ({classes, results, archived}) => {
                 {
                     results !== undefined ?
                         results.map((res, i) => {
-                            return <ResultsRow key={i} result={res}/>
+                            return <ResultsRow key={res.userUUID} result={res}/>
                         }) :
                         null
                 }

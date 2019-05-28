@@ -59,7 +59,6 @@ class RegisterPage extends Component {
         this.props.history.push('/')
     };
 
-
     showErrorSnackbar = (reason) => {
         this.setState({errorReason: reason, open: true})
     };
