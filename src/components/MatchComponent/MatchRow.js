@@ -42,7 +42,6 @@ class MatchRow extends Component {
             matchUUID: match.uuid,
             betTyp: type
         }, Cookies.get('token'))
-            .then(res => res.json())
             .then(res => {
                 if (res.ok) {
                     this.setState({betUuid: res.uuid});
@@ -62,7 +61,6 @@ class MatchRow extends Component {
             betTyp: type,
             uuid: this.state.betUuid
         }, Cookies.get('token'))
-            .then(res => res.json())
             .then(res => {
                 if (res.ok) {
                     this.getSelection()
@@ -126,7 +124,7 @@ class MatchRow extends Component {
             <TableRow className={match.result === "NOT_SET" ? classes.row : classes.endedRow} key={match.id}>
                 <CustomTable component="th" scope="match">{match.host}</CustomTable>
                 <CustomTable align="right">{match.guest}</CustomTable>
-                <CustomTable align="right">{match.round}</CustomTable>
+                <CustomTable align="center">{match.round}</CustomTable>
                 <CustomTable align="center">{this.parseDate(match.matchStartDate)}</CustomTable>
                 <CustomTable align="center">
                     <Button variant="contained" color={this.state.selected === 0 ? "secondary" : "primary"}
