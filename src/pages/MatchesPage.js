@@ -25,6 +25,7 @@ export default class MatchesPage extends Component {
             {}, {token: Cookies.get("token")})
             .then(res => res.json())
             .then(res => {
+                // res = this.sortMatches(res);
                 this.setState({league: res});
                 this.setState({archived: res.archived})
             })

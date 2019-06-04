@@ -35,7 +35,11 @@ export default class LeaguesPage extends Component {
     };
 
     handleSearchChange = (event) => {
-        this.setState({filterText: event.target.value})
+        this.setState({filterText: event.target.value.toString().toLowerCase()})
+    };
+
+    filteredLeagues = () => {
+        return this.state.leaguesArray.filter(x => x.name.toString().toLowerCase().includes(this.state.filterText))
     };
 
     render() {
@@ -44,7 +48,7 @@ export default class LeaguesPage extends Component {
                 <TopBar/>
                 <SearchField searchChange={this.handleSearchChange}/>
                 <LeagueListComponent archived={this.state.archived} onSwitchChange={this.changeSwitchState}
-                                     leagues={this.state.leaguesArray.filter(x => x.name.includes(this.state.filterText))}
+                                     leagues={this.filteredLeagues()}
                                      goToMatches={this.goToMatches}/>
             </>
         )

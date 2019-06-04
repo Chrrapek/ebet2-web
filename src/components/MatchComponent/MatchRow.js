@@ -47,7 +47,8 @@ class MatchRow extends Component {
                     this.setState({betUuid: res.uuid});
                     this.getSelection()
                 } else {
-                    handleErrorOpen(res.message)
+                    res.json()
+                        .then(err => handleErrorOpen(err.message))
                 }
             })
             .catch(console.log)
@@ -65,7 +66,8 @@ class MatchRow extends Component {
                 if (res.ok) {
                     this.getSelection()
                 } else {
-                    handleErrorOpen(res.message)
+                    res.json()
+                        .then(err => handleErrorOpen(err.message))
                 }
             })
             .catch(console.log);
@@ -118,6 +120,11 @@ class MatchRow extends Component {
         return formatter.format(date);
     };
 
+    didMatchStart = (dateString) => {
+        const startDate = Date.parse(dateString);
+        return Date.now() > startDate;
+    };
+
     render() {
         const {classes, match} = this.props;
         return (
@@ -128,21 +135,21 @@ class MatchRow extends Component {
                 <CustomTable align="center">{this.parseDate(match.matchStartDate)}</CustomTable>
                 <CustomTable align="center">
                     <Button variant="contained" color={this.state.selected === 0 ? "secondary" : "primary"}
-                            className={classes.button}
+                            className={classes.button} disabled={this.didMatchStart(match.matchStartDate)}
                             onClick={() => this.evaluateBetClick(0, "HOST_WON")}>
                         <Check/>
                     </Button>
                 </CustomTable>
                 <CustomTable align="center">
                     <Button variant="contained" color={this.state.selected === 1 ? "secondary" : "primary"}
-                            className={classes.button}
+                            className={classes.button} disabled={this.didMatchStart(match.matchStartDate)}
                             onClick={() => this.evaluateBetClick(1, "DRAW")}>
                         <Check/>
                     </Button>
                 </CustomTable>
                 <CustomTable align="center">
                     <Button variant="contained" color={this.state.selected === 2 ? "secondary" : "primary"}
-                            className={classes.button}
+                            className={classes.button} disabled={this.didMatchStart(match.matchStartDate)}
                             onClick={() => this.state.selected === -1 ?
                                 this.addBet("GUEST_WON") : this.changeBet("GUEST_WON")}>
                         <Check/>
