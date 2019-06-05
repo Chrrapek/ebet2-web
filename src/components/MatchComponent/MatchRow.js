@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import TableRow from "@material-ui/core/TableRow";
 import {CustomTable, styles} from "../CustomTable/CustomTable";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {Button} from "@material-ui/core";
-import Check from "@material-ui/icons/Check"
 import * as PropTypes from "prop-types";
 import {api, bet, bets, url} from "../../model/constants";
 import {get, post, put} from "../../model/httpRequests";
 import Cookies from 'js-cookie';
+import BetButton from "../BetButton/BetButton";
 
 class MatchRow extends Component {
 
@@ -134,26 +133,19 @@ class MatchRow extends Component {
                 <CustomTable align="center">{match.round}</CustomTable>
                 <CustomTable align="center">{this.parseDate(match.matchStartDate)}</CustomTable>
                 <CustomTable align="center">
-                    <Button variant="contained" color={this.state.selected === 0 ? "secondary" : "primary"}
-                            className={classes.button} disabled={this.didMatchStart(match.matchStartDate)}
-                            onClick={() => this.evaluateBetClick(0, "HOST_WON")}>
-                        <Check/>
-                    </Button>
+                    <BetButton matchStarted={this.didMatchStart(match.matchStartDate)}
+                               selected={this.state.selected === 0}
+                               onClick={() => this.evaluateBetClick(0, "HOST_WON")}/>
                 </CustomTable>
                 <CustomTable align="center">
-                    <Button variant="contained" color={this.state.selected === 1 ? "secondary" : "primary"}
-                            className={classes.button} disabled={this.didMatchStart(match.matchStartDate)}
-                            onClick={() => this.evaluateBetClick(1, "DRAW")}>
-                        <Check/>
-                    </Button>
+                    <BetButton matchStarted={this.didMatchStart(match.matchStartDate)}
+                               selected={this.state.selected === 1}
+                               onClick={() => this.evaluateBetClick(1, "DRAW")}/>
                 </CustomTable>
                 <CustomTable align="center">
-                    <Button variant="contained" color={this.state.selected === 2 ? "secondary" : "primary"}
-                            className={classes.button} disabled={this.didMatchStart(match.matchStartDate)}
-                            onClick={() => this.state.selected === -1 ?
-                                this.addBet("GUEST_WON") : this.changeBet("GUEST_WON")}>
-                        <Check/>
-                    </Button>
+                    <BetButton matchStarted={this.didMatchStart(match.matchStartDate)}
+                               selected={this.state.selected === 2}
+                               onClick={() => this.evaluateBetClick(2, "GUEST_WON")}/>
                 </CustomTable>
             </TableRow>
         )
