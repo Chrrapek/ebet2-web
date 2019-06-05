@@ -5,7 +5,7 @@ const SearchField = ({searchChange}) => {
         <div className="center tm1">
             <input
                 type='search'
-                placeholder='Filtruj ligi'
+                placeholder='Filtr'
                 onChange={searchChange}
             />
         </div>

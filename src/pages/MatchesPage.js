@@ -6,14 +6,17 @@ import Cookies from 'js-cookie';
 import MatchTable from "../components/MatchComponent/MatchTable";
 import ResultsTable from "../components/ResultsTable/ResultsTable";
 import CustomizedSnackbar from "../components/CustomizedSnackbar/CustomizedSnackbar";
+import SearchField from "../components/SearchField/SearchField";
 
 export default class MatchesPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            filterText: '',
             loading: false,
             error: false,
-            league: {},
+            matches: [],
+            filteredMatches: [],
             results: {},
             archived: false,
             errorReason: ''
@@ -25,8 +28,8 @@ export default class MatchesPage extends Component {
             {}, {token: Cookies.get("token")})
             .then(res => res.json())
             .then(res => {
-                // res = this.sortMatches(res);
-                this.setState({league: res});
+                this.setState({matches: res.matchDTOS});
+                this.setState({filteredMatches: res.matchDTOS});
                 this.setState({archived: res.archived})
             })
             .catch(console.log);
@@ -51,13 +54,22 @@ export default class MatchesPage extends Component {
         this.setState({error: false});
     };
 
+    handleSearchChange = (event) => {
+        const filterText = event.target.value.toString().toLowerCase();
+        const filteredMatches = this.state.matches.filter(
+            x => (x.guest.toString().toLowerCase().includes(filterText)
+                || x.host.toString().toLowerCase().includes(filterText)));
+        this.setState({filteredMatches: filteredMatches})
+    };
+
     render() {
         return (
             <>
                 <TopBar/>
+                <SearchField searchChange={this.handleSearchChange}/>
                 <div className="spaceBetween">
                     <MatchTable handleErrorOpen={this.handleOpen}
-                                archived={this.state.archived} rows={this.state.league.matchDTOS}/>
+                                archived={this.state.archived} rows={this.state.filteredMatches}/>
                     <ResultsTable archived={this.state.archived}
                                   results={this.state.results.generalResult}/>
                 </div>
