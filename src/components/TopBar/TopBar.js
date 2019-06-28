@@ -13,6 +13,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import FaceIcon from "@material-ui/icons/Face";
 import {Divider} from "@material-ui/core";
 import styles from "./TopBarStyles";
 
@@ -87,12 +88,22 @@ class TopBar extends Component {
                             </MenuItem>
                             <Divider/>
 
-                            <MenuItem button key={"Ustawienia"} onClick={() => this.goToSettings()}>
+                            <MenuItem button key={"Ustawienia użytkownika"} onClick={() => this.goToSettings()}>
                                 <ListItemIcon>
                                     <SettingsIcon/>
                                 </ListItemIcon>
-                                <ListItemText primary={"Ustawienia"}/>
+                                <ListItemText primary={"Ustawienia użytkownika"}/>
                             </MenuItem>
+                            {Cookies.get("admin") ?
+                                <MenuItem button key={"Panel administratora"} onClick={() => this.goToSettings()}>
+                                    <ListItemIcon>
+                                        <FaceIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary={"Panel administratora"}/>
+                                </MenuItem>
+                                :
+                                null
+                            }
 
                             <MenuItem className={classes.menuItem} onClick={() => this.logOut()}>
                                 <ListItemIcon className={classes.icon}>

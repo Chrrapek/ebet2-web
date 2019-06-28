@@ -5,10 +5,9 @@ export default class SettingsPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
-            error: false,
-            leaguesArray: [],
-            archived: false
+            username: '',
+            password: '',
+            email: ''
         }
     }
 
@@ -17,7 +16,8 @@ export default class SettingsPage extends Component {
         return (
             <>
                 <TopBar/>
-
+                <div>
+                </div>
             </>
         )
     }
