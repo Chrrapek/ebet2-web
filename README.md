@@ -1,10 +1,7 @@
-A web app for ebet2 service (https://github.com/krasnoludkolo/ebet2).
-
-Written in React without the use of Redux.
+A web app for ebet2 service (https://github.com/krasnoludkolo/ebet2) written in React using Material Design.
 
 ## Steps to launch
 `npm install`
 
 `npm run`
 
-or with yarn
