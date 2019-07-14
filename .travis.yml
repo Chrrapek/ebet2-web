@@ -7,6 +7,10 @@ cache:
 script:
   - npm test
   - npm run build
+branches:
+  only:
+    - master
+    - /^greenkeeper.*$/
 
 deploy:
   provider: pages
