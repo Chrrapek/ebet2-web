@@ -5,7 +5,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {styles} from "../CustomTable/CustomTable";
 
 const BetButton = ({classes, matchStarted, selected, onClick, position}) => {
-    console.log("Selected: ", selected);
     return (
         <Button variant="contained" color={selected ? "secondary" : "primary"}
                 className={classes.button} disabled={matchStarted}
